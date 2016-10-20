@@ -1,0 +1,22 @@
+.h
+
+struct Exprlist{
+       _Expr *exp;
+       Exprlist *next;
+}
+
+________________
+
+.c
+
+Exprlist Ast_Exprlist(_Expr *e, Exprlist *rest){
+	 Exprlist *elem = (Exprlist*) malloc(sizeof(Exprlist));
+	 elem -> exp = e;
+	 elem -> next = rest;
+	 return elem;
+}
+
+na gramatica
+
+explist: exp {$$ = Ast_Exprlist($1, NULL);}
+	 |expr...

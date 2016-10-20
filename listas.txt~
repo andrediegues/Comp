@@ -1,0 +1,14 @@
+.h
+
+struct Exprlist{
+       _Expr *exp;
+       Exprlist *next;
+}
+
+________________
+
+.c
+
+Exprlist Ast_Exprlist(_Expr *l, Exprlist *rest){
+	 Exprlist *elem = (Exprlist*) malloc(sizeof(Exprlist));
+}
