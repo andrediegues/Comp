@@ -25,7 +25,20 @@ struct _Expr {
   };*/
 
 typedef struct _Expr Expr; // Convenience typedef
-
+typedef struct cmd_ *cmd;
+/*struct cmd_{
+  enum{ASSIGN, IF, ELSEIF, END, WHILE, FOR} kind;
+  union{
+    struct{
+      char var[200];
+      Expr expr;
+    }assign;
+    struct{
+      Expr comd;
+      cmd_list body;
+    }iff;
+  }
+  }*/
 //typedef enum {PLUS,MINUS,TIMES,DIV} operator;
 
 // Constructor functions (see implementation in ast.c)

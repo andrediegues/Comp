@@ -40,7 +40,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 31 "parser.bison" /* yacc.c:1909  */
+#line 37 "parser.bison" /* yacc.c:1909  */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -62,11 +62,26 @@ Expr* root;
   {
     INT = 258,
     PLUS = 259,
-    MINUS = 260,
-    TIMES = 261,
-    DIV = 262,
-    VAR = 263,
-    MOD = 264
+    TIMES = 260,
+    DIV = 261,
+    VAR = 262,
+    MOD = 263,
+    LPAR = 264,
+    RPAR = 265,
+    ASSIGN = 266,
+    LT = 267,
+    GT = 268,
+    LTEQ = 269,
+    GTEQ = 270,
+    EQ = 271,
+    NOTEQ = 272,
+    WHILE = 273,
+    FOR = 274,
+    IF = 275,
+    ELSE = 276,
+    ELSEIF = 277,
+    END = 278,
+    MINUS = 279
   };
 #endif
 
@@ -75,12 +90,13 @@ Expr* root;
 
 union YYSTYPE
 {
-#line 21 "parser.bison" /* yacc.c:1909  */
+#line 24 "parser.bison" /* yacc.c:1909  */
 
   int intValue;
-  Expr* exprValue; 
+  Expr* exprValue;
+  char *varValue;
 
-#line 84 "parser.h" /* yacc.c:1909  */
+#line 100 "parser.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
