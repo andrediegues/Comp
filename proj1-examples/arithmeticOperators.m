@@ -1,12 +1,10 @@
-# Arithmetic operator examples.
-# All of them are binary operators.
 
 x = 8;
 y = 4;
-add = x + y; # addition
-sub = x - y; # subtraction
-mul = x * y; # multiplication
-div = x / y; # division
+add = x + y;
+sub = x - y;
+mul = x * y;
+div = x / y;
 
 disp(add);
 disp(sub);

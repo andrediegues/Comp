@@ -7,10 +7,11 @@
 struct _Expr {
   enum { 
     E_INTEGER,
-    E_OPERATION
+    E_OPERATION,
   } kind;
   union {
     int value; // for integer values
+    char* name;
     struct { 
       int operator; // PLUS, MINUS, etc 
       struct _Expr* left;
@@ -19,30 +20,33 @@ struct _Expr {
   } attr;
 };
 
-/*struct Exprlist{
-  _Expr *exp;
-  Exprlist *next;
-  };*/
+struct Cmdlist{
+  cmd* command;
+  Cmdlist* next;
+};
 
 typedef struct _Expr Expr; // Convenience typedef
-typedef struct cmd_ *cmd;
-/*struct cmd_{
-  enum{ASSIGN, IF, ELSEIF, END, WHILE, FOR} kind;
+typedef struct cmd_ cmd;
+typedef struct Cmdlist cmd_list; 
+struct cmd_{
+  enum{ASSIGN, IF, ELSEIF, ELSE, IN, OUT, WHILE, FOR} kind;
   union{
     struct{
       char var[200];
       Expr expr;
     }assign;
     struct{
-      Expr comd;
+      Expr cond;
       cmd_list body;
     }iff;
+    //to do: elseif, else, in, out, while and for
   }
-  }*/
-//typedef enum {PLUS,MINUS,TIMES,DIV} operator;
-
+}
+  
 // Constructor functions (see implementation in ast.c)
 Expr* ast_integer(int v);
 Expr* ast_operation(int operator, Expr* left, Expr* right);
+Expr* ast_variable(char* var);
+//to do: declare functions of commands and list to complete in the ast.c file
 
 #endif

@@ -19,7 +19,7 @@ Expr* ast_operation
   node->attr.op.right = right;
   return node;
 }
-
+//to-do: all functions constructors in ast.h
 /*Exprlist Ast_Exprlist(_Expr *e, Exprlist *rest){
 	 Exprlist *elem = (Exprlist*) malloc(sizeof(Exprlist));
 	 elem -> exp = e;

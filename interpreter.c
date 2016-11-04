@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "parser.h"
 
+//todo: need to implement function to print the syntatic tree instead of result
+
 int eval(Expr* expr) {
   int result = 0;
   if (expr == 0) {
