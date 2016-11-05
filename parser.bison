@@ -1,6 +1,7 @@
 // Tokens
 %token INT
 %token PLUS
+%token MINUS
 %token TIMES
 %token DIV
 %token VAR
@@ -12,11 +13,9 @@
 
 // Operator associativity & precedence
 %left ASSIGN
-%left EQ NOTEQ
-%left LT GT LTEQ GTEQ
+%nonassoc EQ NOTEQ LT GT LTEQ GTEQ
 %left PLUS MINUS
 %left TIMES DIV MOD
-%left COL SCOL IN OUT
 
 // Root-level grammar symbol
 %start program;
@@ -58,14 +57,14 @@ cmdlist: cmds {$$ = ast_list($1, NULL);}
        | cmds cmdlist { $$ = ast_list($1, $2);}
   
 cmds:  VAR ASSIGN expr SCOL		{$$ = ast_assign($1, $3);}
-       | IF expr cmdlist END 		{$$ = ast_if($2, $3);}
+       | VAR ASSIGN expr COL		{$$ = ast_assign($1, $3);} 
+       | IF expr cmdlist END		{$$ = ast_if($2, $3);}
        | ELSEIF expr cmdlist END	{$$ = ast_elseif($2, $3);}
-       | ELSE cmdlist 	     		{$$ = ast_else($2);}
+       | ELSE cmdlist END     		{$$ = ast_else($2);}
        | WHILE expr cmdlist END		{$$ = ast_while($2, $3);}
-       | FOR expr COL expr cmdlist END 	{$$ = ast_for($2, $4, $5);}
-       | OUT LPAR expr RPAR SCOL   	{$$ = ast_out($3);}
-       | VAR ASSIGN IN LPAR RPAR SCOL	{$$ = ast_in($1);}
-
+      // | FOR cmdlist COL expr cmdlist END {$$ = ast_for($2, $4, $5);}
+       | OUT LPAR expr RPAR 		{$$ = ast_out($3);}
+       | VAR ASSIGN IN LPAR RPAR 	{$$ = ast_in($1);}
 expr: 
   INT			{$$ = ast_integer($1);}
   | VAR 		{$$ = ast_variable($1);}
