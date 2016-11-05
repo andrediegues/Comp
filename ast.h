@@ -8,6 +8,7 @@ struct _Expr {
   enum { 
     E_INTEGER,
     E_OPERATION,
+    E_VAR
   } kind;
   union {
     int value; // for integer values
@@ -20,33 +21,64 @@ struct _Expr {
   } attr;
 };
 
+struct cmd_{
+  enum{C_ASSIGN, C_IF, C_ELSEIF, C_ELSE, C_IN, C_OUT, C_WHILE, C_FOR} kind;
+  union{
+    struct{
+      char* var;
+      struct _Expr* expr;
+    }assign;
+    struct{
+      struct _Expr* cond;
+      struct Cmdlist* body;
+    }iff;
+    struct{
+      struct _Expr* cond;
+      struct Cmdlist* body;
+    }elseif;
+    struct{
+      struct Cmdlist* body;
+    }elsee;
+    struct{
+      struct _Expr* cond;
+      struct Cmdlist* body;
+    }whilee;
+    struct{
+      struct _Expr* cond;
+      struct _Expr* size;
+      struct Cmdlist* body;
+    }forr;
+    struct{
+      struct _Expr* expr;
+    }out;
+    struct{
+      char* value;
+    }in;
+  }comm;
+};
+
 struct Cmdlist{
-  cmd* command;
-  Cmdlist* next;
+  struct cmd_* command;
+  struct Cmdlist* next;
 };
 
 typedef struct _Expr Expr; // Convenience typedef
 typedef struct cmd_ cmd;
 typedef struct Cmdlist cmd_list; 
-struct cmd_{
-  enum{ASSIGN, IF, ELSEIF, ELSE, IN, OUT, WHILE, FOR} kind;
-  union{
-    struct{
-      char var[200];
-      Expr expr;
-    }assign;
-    struct{
-      Expr cond;
-      cmd_list body;
-    }iff;
-    //to do: elseif, else, in, out, while and for
-  }
-}
+
   
 // Constructor functions (see implementation in ast.c)
 Expr* ast_integer(int v);
 Expr* ast_operation(int operator, Expr* left, Expr* right);
 Expr* ast_variable(char* var);
-//to do: declare functions of commands and list to complete in the ast.c file
+cmd* ast_assign(char* var, Expr* expr);
+cmd_list* ast_list(cmd* command, cmd_list* next);
+cmd* ast_if(Expr* cond, cmd_list* commands);
+cmd* ast_elseif(Expr* cond, cmd_list* commands);
+cmd* ast_else(cmd_list* commands);
+cmd* ast_while(Expr* cond, cmd_list* commands);
+cmd* ast_for(Expr* cond, Expr* size, cmd_list* commands);
+cmd* ast_in(char* value);
+cmd* ast_out(Expr* expr);
 
 #endif

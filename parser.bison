@@ -26,15 +26,15 @@
   int intValue;
   Expr* exprValue;
   char* varValue;
-  List* list
-  Command* cmd;
+  cmd_list* list;
+  cmd* command;
 }
 
 %type <intValue> INT
 %type <exprValue> expr
 %type <varValue> VAR
 %type <list> cmdlist
-%type <cmd> cmds
+%type <command> cmds
 
 // Use "%code requires" to make declarations go
 // into both parser.c and parser.h

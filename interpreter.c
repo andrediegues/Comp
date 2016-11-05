@@ -1,38 +1,108 @@
 #include <stdio.h>
 #include "parser.h"
 
-//todo: need to implement function to print the syntatic tree instead of result
+void print_tree(l);
+void print_expr(expr);
+void print_command(c);
 
-int eval(Expr* expr) {
-  int result = 0;
-  if (expr == 0) {
-    yyerror("Null expression!!");
+
+void print_expr(Expr* expr){
+  printf("Expressao(");
+  switch(expr->kind){
+		
+  case E_INTEGER: printf("Int(%d ", expr->attr.value); break;
+		
+  case E_OPERATION:print_expr(expr->attr.op.left); printf("( ");
+    switch(expr->attr.op.operator){
+    case PLUS: printf("PLUS ) ");
+      break;
+    case MINUS: printf("MINUS ) ");
+      break;
+    case TIMES: printf("TIMES )");
+      break;
+    case DIV: printf("DIV )" );
+      break;
+    case MOD: printf("MOD )");
+      break;
+    case GT: printf(">) ");
+      break;
+    case GTEQ: printf(">=) ");
+      break;
+    case LT: printf("<) ");
+      break;
+    case LTEQ: printf("<=) ");
+      break;
+    case NOTEQ: printf("~=) ");
+      break;
+    case EQ: printf("==) ");
+      break;
+    default: break;
+    }  
+    print_expr(expr->attr.op.right);
+    break;
+  default: printf("Var( %s ) ",expr->attr.value);
   }
-  else if (expr->kind == E_INTEGER) {
-    result = expr->attr.value; 
-  } 
-  else if (expr->kind == E_OPERATION) {
-    int vLeft = eval(expr->attr.op.left);
-    int vRight = eval(expr->attr.op.right);
-    switch (expr->attr.op.operator) {
-    case PLUS: 
-      result = vLeft + vRight; 
-      break;
-      // TODO Other cases here ...
-    case MINUS:
-      result = vLeft - vRight;
-      break;
-    case TIMES:
-      result = vLeft * vRight;
-      break;
-    case DIV:
-      result = vLeft / vRight;
-      break;
-    default: yyerror("Unknown operator!");
-    }
-  }
-  return result;
+  printf(")");
 }
+
+void print_command(cmd* c){
+	
+  switch(c->kind){
+  case IF:printf("IF ( ");
+    print_expr(c->comm.iff.cond );
+    print_tree(c->comm.iff.body); printf( " )");
+    break;
+    
+  case ELSEIF: printf("ELSEIF ( ");
+    print_expr(c->comm.elseif.cond);
+    print_tree(c->comm.elseif.body); printf(" )");
+    break;
+
+  case ELSE: printf("ELSE ( ");
+    print_tree(c->comm.elsee.body); printf(" ) ");
+    break;
+
+  case WHILE: printf("WHILE ( ");
+    print_expr(c->comm.whilee.cond);
+    print_tree(c->comm.whilee.body); printf( ") ");
+    printf( ")");
+    break;
+
+  case FOR: printf("FOR ( ");
+    print_expr(c->comm.forr.cond);
+    print_expr(c->comm.forr.size);
+    print_tree(c->comm.forr.body);
+    printf(") ");
+    break;
+
+  case OUT: printf("OUTPUT ( ");
+    print_expr(c->comm.out.expr);
+    printf(") ");
+    break;
+
+  case IN: printf("INPUT ( Var(%s) ", c->comm.in.value);
+    printf(") ");
+    break;
+    
+  default: printf("Assignment( Var(%s) ", c->comm.assign.var);
+    print_expr(c-> comm.assign.expr); printf(") ");
+  }
+}
+  
+void print_tree(cmd_list* l){	
+  if( l!=NULL){
+    print_command(l->command);
+    if(l->next !=NULL)
+      print_tree(l->next);
+    else return;
+  }
+  else{
+    printf("NULL");
+    return;
+  }
+}
+
+
 int main(int argc, char** argv) {
   --argc; ++argv;
   if (argc != 0) {
@@ -43,9 +113,10 @@ int main(int argc, char** argv) {
     }
   } //  yyin = stdin
   if (yyparse() == 0) {
-      printf("Result = %d\n", eval(root));
-  }
-  return 0;
+    print_tree(root);
+}
+return 0;
 
 
 }
+
