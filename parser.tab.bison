@@ -63,7 +63,7 @@
 
 /* Copy the first part of user declarations.  */
 
-#line 67 "parser.c" /* yacc.c:339  */
+#line 67 "parser.tab.bison" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -82,9 +82,9 @@
 #endif
 
 /* In a future release of Bison, this section will be replaced
-   by #include "parser.h".  */
-#ifndef YY_YY_PARSER_H_INCLUDED
-# define YY_YY_PARSER_H_INCLUDED
+   by #include "parser.tab.bison".  */
+#ifndef YY_YY_PARSER_TAB_BISON_INCLUDED
+# define YY_YY_PARSER_TAB_BISON_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -106,7 +106,7 @@ extern FILE* yyin;
 extern void yyerror(const char* msg);
 cmd_list* root;
 
-#line 110 "parser.c" /* yacc.c:355  */
+#line 110 "parser.tab.bison" /* yacc.c:355  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -155,7 +155,7 @@ union YYSTYPE
   cmd_list* list;
   cmd* command;
 
-#line 159 "parser.c" /* yacc.c:355  */
+#line 159 "parser.tab.bison" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -168,11 +168,11 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_PARSER_H_INCLUDED  */
+#endif /* !YY_YY_PARSER_TAB_BISON_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
 
-#line 176 "parser.c" /* yacc.c:358  */
+#line 176 "parser.tab.bison" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -1302,155 +1302,155 @@ yyreduce:
         case 2:
 #line 55 "parser.bison" /* yacc.c:1646  */
     { root = (yyvsp[0].list); }
-#line 1306 "parser.c" /* yacc.c:1646  */
+#line 1306 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 3:
 #line 57 "parser.bison" /* yacc.c:1646  */
     {(yyval.list) = ast_list((yyvsp[0].command), NULL);}
-#line 1312 "parser.c" /* yacc.c:1646  */
+#line 1312 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 4:
 #line 58 "parser.bison" /* yacc.c:1646  */
     { (yyval.list) = ast_list((yyvsp[-1].command), (yyvsp[0].list));}
-#line 1318 "parser.c" /* yacc.c:1646  */
+#line 1318 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 5:
 #line 60 "parser.bison" /* yacc.c:1646  */
     {(yyval.command) = ast_assign((yyvsp[-3].varValue), (yyvsp[-1].exprValue));}
-#line 1324 "parser.c" /* yacc.c:1646  */
+#line 1324 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 6:
 #line 61 "parser.bison" /* yacc.c:1646  */
     {(yyval.command) = ast_if((yyvsp[-2].exprValue), (yyvsp[-1].list));}
-#line 1330 "parser.c" /* yacc.c:1646  */
+#line 1330 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 7:
 #line 62 "parser.bison" /* yacc.c:1646  */
     {(yyval.command) = ast_elseif((yyvsp[-2].exprValue), (yyvsp[-1].list));}
-#line 1336 "parser.c" /* yacc.c:1646  */
+#line 1336 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 8:
 #line 63 "parser.bison" /* yacc.c:1646  */
     {(yyval.command) = ast_else((yyvsp[0].list));}
-#line 1342 "parser.c" /* yacc.c:1646  */
+#line 1342 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 9:
 #line 64 "parser.bison" /* yacc.c:1646  */
     {(yyval.command) = ast_while((yyvsp[-2].exprValue), (yyvsp[-1].list));}
-#line 1348 "parser.c" /* yacc.c:1646  */
+#line 1348 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 10:
 #line 65 "parser.bison" /* yacc.c:1646  */
     {(yyval.command) = ast_for((yyvsp[-4].exprValue), (yyvsp[-2].exprValue), (yyvsp[-1].list));}
-#line 1354 "parser.c" /* yacc.c:1646  */
+#line 1354 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 11:
 #line 66 "parser.bison" /* yacc.c:1646  */
     {(yyval.command) = ast_out((yyvsp[-2].exprValue));}
-#line 1360 "parser.c" /* yacc.c:1646  */
+#line 1360 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 12:
 #line 67 "parser.bison" /* yacc.c:1646  */
     {(yyval.command) = ast_in((yyvsp[-5].varValue));}
-#line 1366 "parser.c" /* yacc.c:1646  */
+#line 1366 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 13:
 #line 70 "parser.bison" /* yacc.c:1646  */
     {(yyval.exprValue) = ast_integer((yyvsp[0].intValue));}
-#line 1372 "parser.c" /* yacc.c:1646  */
+#line 1372 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 14:
 #line 71 "parser.bison" /* yacc.c:1646  */
     {(yyval.exprValue) = ast_variable((yyvsp[0].varValue));}
-#line 1378 "parser.c" /* yacc.c:1646  */
+#line 1378 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 15:
 #line 72 "parser.bison" /* yacc.c:1646  */
     {(yyval.exprValue) = ast_operation(PLUS, (yyvsp[-2].exprValue), (yyvsp[0].exprValue));}
-#line 1384 "parser.c" /* yacc.c:1646  */
+#line 1384 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 16:
 #line 73 "parser.bison" /* yacc.c:1646  */
     {(yyval.exprValue) = ast_operation(MINUS,(yyvsp[-2].exprValue),(yyvsp[0].exprValue));}
-#line 1390 "parser.c" /* yacc.c:1646  */
+#line 1390 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 17:
 #line 74 "parser.bison" /* yacc.c:1646  */
     {(yyval.exprValue) = ast_operation(TIMES, (yyvsp[-2].exprValue), (yyvsp[0].exprValue));}
-#line 1396 "parser.c" /* yacc.c:1646  */
+#line 1396 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 18:
 #line 75 "parser.bison" /* yacc.c:1646  */
     {(yyval.exprValue) = ast_operation(DIV, (yyvsp[-2].exprValue), (yyvsp[0].exprValue));}
-#line 1402 "parser.c" /* yacc.c:1646  */
+#line 1402 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 19:
 #line 76 "parser.bison" /* yacc.c:1646  */
     {(yyval.exprValue) = ast_operation(MOD, (yyvsp[-2].exprValue), (yyvsp[0].exprValue));}
-#line 1408 "parser.c" /* yacc.c:1646  */
+#line 1408 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 20:
 #line 77 "parser.bison" /* yacc.c:1646  */
     {(yyval.exprValue) = ast_operation(LT, (yyvsp[-2].exprValue), (yyvsp[0].exprValue));}
-#line 1414 "parser.c" /* yacc.c:1646  */
+#line 1414 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 21:
 #line 78 "parser.bison" /* yacc.c:1646  */
     {(yyval.exprValue) = ast_operation(GT, (yyvsp[-2].exprValue), (yyvsp[0].exprValue));}
-#line 1420 "parser.c" /* yacc.c:1646  */
+#line 1420 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 22:
 #line 79 "parser.bison" /* yacc.c:1646  */
     {(yyval.exprValue) = ast_operation(EQ, (yyvsp[-2].exprValue), (yyvsp[0].exprValue));}
-#line 1426 "parser.c" /* yacc.c:1646  */
+#line 1426 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 23:
 #line 80 "parser.bison" /* yacc.c:1646  */
     {(yyval.exprValue) = ast_operation(NOTEQ, (yyvsp[-2].exprValue), (yyvsp[0].exprValue));}
-#line 1432 "parser.c" /* yacc.c:1646  */
+#line 1432 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 24:
 #line 81 "parser.bison" /* yacc.c:1646  */
     {(yyval.exprValue) = ast_operation(LTEQ, (yyvsp[-2].exprValue), (yyvsp[0].exprValue));}
-#line 1438 "parser.c" /* yacc.c:1646  */
+#line 1438 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 25:
 #line 82 "parser.bison" /* yacc.c:1646  */
     {(yyval.exprValue) = ast_operation(GTEQ, (yyvsp[-2].exprValue), (yyvsp[0].exprValue));}
-#line 1444 "parser.c" /* yacc.c:1646  */
+#line 1444 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
   case 26:
 #line 83 "parser.bison" /* yacc.c:1646  */
     {(yyval.exprValue) = (yyvsp[-1].exprValue);}
-#line 1450 "parser.c" /* yacc.c:1646  */
+#line 1450 "parser.tab.bison" /* yacc.c:1646  */
     break;
 
 
-#line 1454 "parser.c" /* yacc.c:1646  */
+#line 1454 "parser.tab.bison" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires

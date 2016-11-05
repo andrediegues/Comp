@@ -1,6 +1,7 @@
 // AST constructor functions
 
 #include <stdlib.h> // for malloc
+#include <string.h>
 #include "ast.h" // AST header
 
 Expr* ast_integer(int v) {

@@ -16,6 +16,8 @@ int yyline = 1;
 "*" 	{return TIMES;}
 "/" 	{return DIV;}
 "%"	{return MOD;}
+":"	{return COL;}
+";"	{return SCOL;}
 "("	{return LPAR;}
 ")"	{return RPAR;}
 "<"	{return LT;}
@@ -25,8 +27,6 @@ int yyline = 1;
 "=="	{return EQ;}
 "~="	{return NOTEQ;}
 "="	{return ASSIGN;}
-":"	{return COL;}
-";"	{return SCOL;}
 
 "disp" 	{return OUT;}
 "input"	{return IN;}
@@ -39,7 +39,7 @@ int yyline = 1;
 .  	{ yyerror("unexpected character"); }
 
 
-[# \t\n]+ {  }
+[ \t\n]+ {  }
 [a-zA-Z_][a-zA-Z0-9_]* {
    yylval.varValue = strdup(yytext);
    return VAR;

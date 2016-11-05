@@ -48,11 +48,11 @@ extern int yyline;
 extern char* yytext;
 extern FILE* yyin;
 extern void yyerror(const char* msg);
-struct CommandList* root;
+cmd_list* root;
 }
 
 %%
-program: cmdlist { root = $1; }
+program: cmdlist { root = $1; } 
 
 cmdlist: cmds {$$ = ast_list($1, NULL);}
        | cmds cmdlist { $$ = ast_list($1, $2);}
@@ -63,7 +63,7 @@ cmds:  VAR ASSIGN expr SCOL		{$$ = ast_assign($1, $3);}
        | ELSE cmdlist 	     		{$$ = ast_else($2);}
        | WHILE expr cmdlist END		{$$ = ast_while($2, $3);}
        | FOR expr COL expr cmdlist END 	{$$ = ast_for($2, $4, $5);}
-       | OUT LPAR expr RPAR SCOL   	{$$ = ast_output($3);}
+       | OUT LPAR expr RPAR SCOL   	{$$ = ast_out($3);}
        | VAR ASSIGN IN LPAR RPAR SCOL	{$$ = ast_in($1);}
 
 expr: 

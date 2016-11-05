@@ -1,10 +1,20 @@
 #include <stdio.h>
 #include "parser.h"
 
-void print_tree(l);
-void print_expr(expr);
-void print_command(c);
+void print_tree(cmd_list* l){	
+  if( l!=NULL){
+    print_command(l->command);
+    if(l->next !=NULL)
+      print_tree(l->next);
+    else return;
+  }
+  else{
+    printf("NULL");
+    return;
+  }
+}
 
+  
 
 void print_expr(Expr* expr){
   printf("Expressao(");
@@ -40,10 +50,12 @@ void print_expr(Expr* expr){
     }  
     print_expr(expr->attr.op.right);
     break;
-  default: printf("Var( %s ) ",expr->attr.value);
+  default: printf("Var( %s ) ",expr->attr.name);
   }
   printf(")");
 }
+
+
 
 void print_command(cmd* c){
 	
@@ -88,20 +100,6 @@ void print_command(cmd* c){
     print_expr(c-> comm.assign.expr); printf(") ");
   }
 }
-  
-void print_tree(cmd_list* l){	
-  if( l!=NULL){
-    print_command(l->command);
-    if(l->next !=NULL)
-      print_tree(l->next);
-    else return;
-  }
-  else{
-    printf("NULL");
-    return;
-  }
-}
-
 
 int main(int argc, char** argv) {
   --argc; ++argv;
@@ -114,9 +112,8 @@ int main(int argc, char** argv) {
   } //  yyin = stdin
   if (yyparse() == 0) {
     print_tree(root);
-}
-return 0;
+  }
+  return 0;
 
 
 }
-

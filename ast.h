@@ -3,6 +3,10 @@
 #ifndef __ast_h__
 #define __ast_h__
 
+typedef struct _Expr Expr; // Convenience typedef
+typedef struct cmd_ cmd;
+typedef struct Cmdlist cmd_list; 
+
 // AST for expressions
 struct _Expr {
   enum { 
@@ -26,30 +30,30 @@ struct cmd_{
   union{
     struct{
       char* var;
-      struct _Expr* expr;
+      Expr* expr;
     }assign;
     struct{
-      struct _Expr* cond;
-      struct Cmdlist* body;
+      Expr* cond;
+      cmd_list* body;
     }iff;
     struct{
-      struct _Expr* cond;
-      struct Cmdlist* body;
+      Expr* cond;
+      cmd_list* body;
     }elseif;
     struct{
-      struct Cmdlist* body;
+      cmd_list* body;
     }elsee;
     struct{
-      struct _Expr* cond;
-      struct Cmdlist* body;
+      Expr* cond;
+      cmd_list* body;
     }whilee;
     struct{
-      struct _Expr* cond;
-      struct _Expr* size;
-      struct Cmdlist* body;
+      Expr* cond;
+      Expr* size;
+      cmd_list* body;
     }forr;
     struct{
-      struct _Expr* expr;
+      Expr* expr;
     }out;
     struct{
       char* value;
@@ -58,13 +62,9 @@ struct cmd_{
 };
 
 struct Cmdlist{
-  struct cmd_* command;
-  struct Cmdlist* next;
+  cmd* command;
+  cmd_list* next;
 };
-
-typedef struct _Expr Expr; // Convenience typedef
-typedef struct cmd_ cmd;
-typedef struct Cmdlist cmd_list; 
 
   
 // Constructor functions (see implementation in ast.c)
