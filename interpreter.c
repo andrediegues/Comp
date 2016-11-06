@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include "parser.h"
 
+void print_command(cmd* command);
+void print_expr(Expr* expr);
+
 void print_tree(cmd_list* l){	
   if( l!=NULL){
     print_command(l->command);
@@ -17,6 +20,7 @@ void print_tree(cmd_list* l){
   
 
 void print_expr(Expr* expr){
+
   printf("Expressao(");
   switch(expr->kind){
 		
@@ -60,39 +64,39 @@ void print_expr(Expr* expr){
 void print_command(cmd* c){
 	
   switch(c->kind){
-  case IF:printf("IF ( ");
+  case C_IF:printf("IF ( ");
     print_expr(c->comm.iff.cond );
     print_tree(c->comm.iff.body); printf( " )");
     break;
     
-  case ELSEIF: printf("ELSEIF ( ");
+  case C_ELSEIF: printf("ELSEIF ( ");
     print_expr(c->comm.elseif.cond);
     print_tree(c->comm.elseif.body); printf(" )");
     break;
 
-  case ELSE: printf("ELSE ( ");
+  case C_ELSE: printf("ELSE ( ");
     print_tree(c->comm.elsee.body); printf(" ) ");
     break;
 
-  case WHILE: printf("WHILE ( ");
+  case C_WHILE: printf("WHILE ( ");
     print_expr(c->comm.whilee.cond);
     print_tree(c->comm.whilee.body); printf( ") ");
     printf( ")");
     break;
 
-  case FOR: printf("FOR ( ");
-    print_expr(c->comm.forr.cond);
+  case C_FOR: printf("FOR ( ");
+    print_command(c->comm.forr.cond);
     print_expr(c->comm.forr.size);
     print_tree(c->comm.forr.body);
     printf(") ");
     break;
 
-  case OUT: printf("OUTPUT ( ");
+  case C_OUT: printf("OUTPUT ( ");
     print_expr(c->comm.out.expr);
     printf(") ");
     break;
 
-  case IN: printf("INPUT ( Var(%s) ", c->comm.in.value);
+  case C_IN: printf("INPUT ( Var(%s) ", c->comm.in.value);
     printf(") ");
     break;
     

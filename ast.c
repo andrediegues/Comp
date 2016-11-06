@@ -73,7 +73,7 @@ cmd* ast_while(Expr* cond, cmd_list* commands){
   return com;
 }
 
-cmd* ast_for(Expr* cond, Expr* size, cmd_list* commands){
+cmd* ast_for(cmd* cond, Expr* size, cmd_list* commands){
   cmd* com = (cmd*) malloc(sizeof(cmd));
   com -> kind = C_FOR;
   com -> comm.forr.cond = cond;

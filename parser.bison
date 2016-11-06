@@ -7,7 +7,7 @@
 %token VAR
 %token MOD
 %token LPAR RPAR
-%token ASSIGN LT GT LTEQ GTEQ EQ NOTEQ
+%token ASSIGN LT GT LTEQ GTEQ EQ NOTEQ TRUE FALSE
 %token WHILE FOR IF ELSE ELSEIF END
 %token IN OUT COL SCOL
 
@@ -57,16 +57,18 @@ cmdlist: cmds {$$ = ast_list($1, NULL);}
        | cmds cmdlist { $$ = ast_list($1, $2);}
   
 cmds:  VAR ASSIGN expr SCOL		{$$ = ast_assign($1, $3);}
-       | VAR ASSIGN expr COL		{$$ = ast_assign($1, $3);} 
+       | VAR ASSIGN expr		{$$ = ast_assign($1, $3);} 
        | IF expr cmdlist END		{$$ = ast_if($2, $3);}
        | ELSEIF expr cmdlist END	{$$ = ast_elseif($2, $3);}
        | ELSE cmdlist END     		{$$ = ast_else($2);}
        | WHILE expr cmdlist END		{$$ = ast_while($2, $3);}
-      // | FOR cmdlist COL expr cmdlist END {$$ = ast_for($2, $4, $5);}
-       | OUT LPAR expr RPAR 		{$$ = ast_out($3);}
-       | VAR ASSIGN IN LPAR RPAR 	{$$ = ast_in($1);}
+       | FOR cmds COL expr cmdlist END {$$ = ast_for($2, $4, $5);}
+       | OUT LPAR expr RPAR SCOL	{$$ = ast_out($3);}
+       | VAR ASSIGN IN LPAR RPAR SCOL {$$ = ast_in($1);}
 expr: 
-  INT			{$$ = ast_integer($1);}
+  INT			{$$ = ast_integer($1);}  
+  | TRUE      		{$$ = ast_integer(1);}
+  | FALSE		{$$ = ast_integer(0);}
   | VAR 		{$$ = ast_variable($1);}
   | expr PLUS expr	{$$ = ast_operation(PLUS, $1, $3);}
   | expr MINUS expr 	{$$ = ast_operation(MINUS,$1,$3);}     
@@ -80,7 +82,6 @@ expr:
   | expr LTEQ expr	{$$ = ast_operation(LTEQ, $1, $3);}
   | expr GTEQ expr	{$$ = ast_operation(GTEQ, $1, $3);}
   | LPAR expr RPAR	{$$ = $2;}
-
   ;
 
 %%

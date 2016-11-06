@@ -11,6 +11,13 @@ int yyline = 1;
 
 %%
 
+
+[ \t]+ {  }
+#.*\n { yyline++; }
+\n { yyline++; }
+
+\-?[0-9]+ { yylval.intValue = atoi(yytext); return INT; }
+
 "+"	{return PLUS;}
 "-" 	{return MINUS;}
 "*" 	{return TIMES;}
@@ -28,6 +35,8 @@ int yyline = 1;
 "~="	{return NOTEQ;}
 "="	{return ASSIGN;}
 
+"true"	{return TRUE;}
+"false"	{return FALSE;}
 "disp" 	{return OUT;}
 "input"	{return IN;}
 "if"	{return IF;}
@@ -36,17 +45,11 @@ int yyline = 1;
 "end"	{return END;}
 "while"	{return WHILE;}
 "for"	{return FOR;}
+
+
+\-?[a-zA-Z]+ { yylval.varValue = strdup(yytext); return VAR; }
+
 .  	{ yyerror("unexpected character"); }
 
-
-[ \t\n]+ {  }
-[a-zA-Z_][a-zA-Z0-9_]* {
-   yylval.varValue = strdup(yytext);
-   return VAR;
-}
-[0-9]+ { 
-   yylval.intValue = atoi(yytext);
-   return INT; 
-}
 %%
 

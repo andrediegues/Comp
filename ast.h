@@ -48,7 +48,7 @@ struct cmd_{
       cmd_list* body;
     }whilee;
     struct{
-      Expr* cond;
+      cmd* cond;
       Expr* size;
       cmd_list* body;
     }forr;
@@ -77,7 +77,7 @@ cmd* ast_if(Expr* cond, cmd_list* commands);
 cmd* ast_elseif(Expr* cond, cmd_list* commands);
 cmd* ast_else(cmd_list* commands);
 cmd* ast_while(Expr* cond, cmd_list* commands);
-cmd* ast_for(Expr* cond, Expr* size, cmd_list* commands);
+cmd* ast_for(cmd* cond, Expr* size, cmd_list* commands);
 cmd* ast_in(char* value);
 cmd* ast_out(Expr* expr);
 
