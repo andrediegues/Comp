@@ -24,7 +24,7 @@ void print_expr(Expr* expr){
   printf("Expressao(");
   switch(expr->kind){
 		
-  case E_INTEGER: printf("Int(%d ", expr->attr.value); break;
+  case E_INTEGER: printf("Int(%d )", expr->attr.value); break;
 		
   case E_OPERATION:print_expr(expr->attr.op.left); printf("( ");
     switch(expr->attr.op.operator){
@@ -103,6 +103,7 @@ void print_command(cmd* c){
   default: printf("Assignment( Var(%s) ", c->comm.assign.var);
     print_expr(c-> comm.assign.expr); printf(") ");
   }
+  printf("\n");
 }
 
 int main(int argc, char** argv) {
