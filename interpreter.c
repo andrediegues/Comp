@@ -9,7 +9,10 @@ void print_tree(cmd_list* l){
     print_command(l->command);
     if(l->next !=NULL)
       print_tree(l->next);
-    else return;
+    else{ 
+      printf("\n"); 
+      return;
+    }
   }
   else{
     printf("NULL");
@@ -62,7 +65,7 @@ void print_expr(Expr* expr){
 
 
 void print_command(cmd* c){
-	
+	printf("\n");
   switch(c->kind){
   case C_IF:printf("IF ( ");
     print_expr(c->comm.iff.cond );
@@ -81,7 +84,6 @@ void print_command(cmd* c){
   case C_WHILE: printf("WHILE ( ");
     print_expr(c->comm.whilee.cond);
     print_tree(c->comm.whilee.body); printf( ") ");
-    printf( ")");
     break;
 
   case C_FOR: printf("FOR ( ");
@@ -103,7 +105,6 @@ void print_command(cmd* c){
   default: printf("Assignment( Var(%s) ", c->comm.assign.var);
     print_expr(c-> comm.assign.expr); printf(") ");
   }
-  printf("\n");
 }
 
 int main(int argc, char** argv) {
