@@ -18,3 +18,9 @@ typedef struct{
 	OpKind op;
 	Address addr1, addr2, addr3;
 }Instr;
+
+typedef struct List list;
+struct List{
+	Instr inst;
+	List next;
+}
