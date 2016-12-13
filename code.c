@@ -1,4 +1,7 @@
+#include <string.h>
+#include <stdlib.h>
 #include "code.h"
+
 
 Instr mkInstr(op, a1, a2, a3){
   Instr *instr = (Instr*) malloc(sizeof(Instr));
@@ -27,16 +30,16 @@ mkIEmpty(){
 
 }
 
-List mkList(Inst head, List tail){
-  List *newp;
-  newp = (List*) malloc(sizeof(List));
+InstrList* mkList(Instr* head, InstrList* tail){
+  InstrList* newp;
+  newp = (InstrList*) malloc(sizeof(InstrList));
   newp -> inst = head;
   newp -> next = tail;
   return newp; 
 }
 
-List append(List* l1, List* l2){
-  List* p;
+InstrList* append(InstrList* l1, InstrList* l2){
+  InstrList* p;
   if(l1 == NULL)
     return l2;
   if(l2 == NULL)
@@ -46,41 +49,36 @@ List append(List* l1, List* l2){
   return l1;
 }
 
-
-
-Instr head(List l){
+Instr* head(InstrList* l){
   if(l != NULL)
     return (l -> inst);
 }
 
-List tail(List l){
+InstrList* tail(InstrList* l){
   if(l != NULL)
     return (l -> next);
 }
 
-Pair compileExpr(Expr e);
-InstrList compileCmd(Cmd c);
-InstrList compileCmdList(CmdList l);
-
-InstrList compileCmd(Cmd c){
-  ...
-  switch(cmd... -> kind){
-  case ASSIGN:
-    p = compileExpr(cmd... -> expr);
-    l = append(p -> code/*snd(p)*/, mkList(mkInstr(ASSIGN, cmd -> var/*var(cmd)*/, p -> var/*fst(p)*/, NULL)));
-    return l;
-  case IF:
-    ...
-    }
+char* newVar(int n){
+  char t1[20];
+  char t2[20];
+  strcpy(t1, "$t");
+  sprintf(t2, "%d", n);
+  char* aux = (char*) malloc(1 + strlen(t1) + strlen(t2));
+  strcpy(aux, t1);
+  strcat(aux, t2);
+  return aux;
 }
 
-InstrList compileCmdList(CmdList l){
-  InstrList il = (InstrList*) malloc(sizeof(InstrList));
-  
+char* newLabel(int n){
+  char t1[20];
+  char t2[20];
+  strcpy(t1, "L");
+  sprintf(t2, "%d", n);
+  char* aux = (char*) malloc(1 + strlen(t1) + strlen(t2));
+  strcpy(aux, t1);
+  strcat(aux, t2);
+  return aux;
 }
 
-Pair compileExpr(Expr expr){
-  Pair p = (Pair*) malloc(sizeof(Pair));
-  
-}
 

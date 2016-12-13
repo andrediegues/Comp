@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include "parser.h"
+#include "code.h"
+#include "code.c"
 
-void print_command(cmd* command);
+/*void print_command(cmd* command);
 void print_expr(Expr* expr);
 
 void print_tree(cmd_list* l){	
@@ -105,6 +107,82 @@ void print_command(cmd* c){
   default: printf("Assignment( Var(%s) ", c->comm.assign.var);
     print_expr(c-> comm.assign.expr); printf(") ");
   }
+  }*/
+int regist;
+Pair compileExpr(Expr e);
+InstrList compileCmd(Cmd c);
+InstrList compileCmdList(CmdList l);
+
+Pair compileExpr(Expr expr){
+  Pair p = (Pair*) malloc(sizeof(Pair));
+  switch(expr -> kind){
+  case E_INT:
+    p -> first = mkIInt(expr -> attr.val);
+    p -> second = NULL;
+    regist++;
+    return p;
+    break;
+  case VAR:
+    p -> first = mkIVar(expr -> attr.var);
+    p -> second = NULL;
+    return p;
+    break;
+  case E_OPERATION:
+    Pair* p1 = compileExpr(expr->attr.op.left);
+    Pair* p2 = compileExpr(expr->attr.op.right);
+    Instr* t;
+
+    switch(expr->attr.op.operator){
+      case PLUS:
+	t = mkInstr(I_PLUS, mkIVar(newVar(regist)),p1 -> first, p2 -> first);
+	break;
+      case MINUS:
+	t = mkInstr(I_MINUS, mkIVar(newVar(regist)),p1 -> first, p2 -> first);
+	break;
+      case TIMES:
+	t = mkInstr(I_TIMES, mkIVar(newVar(regist)),p1 -> first, p2 -> first);
+	break;
+      case DIV:
+	t = mkInstr(I_DIV, mkIVar(newVar(regist)),p1 -> first, p2 -> first);
+	break;
+      case EQ:
+	t = mkInstr(I_EQ, mkIVar(newVar(regist)),p1 -> first, p2 -> first);
+	break;
+      case NOTEQ:
+	t = mkInstr(I_NOTEQ, mkIVar(newVar(regist)),p1 -> first, p2 -> first);
+	break;
+      case GT:
+	t = mkInstr(I_GT, mkIVar(newVar(regist)),p1 -> first, p2 -> first);
+	break;
+      case LT:
+	t = mkInstr(I_LT, mkIVar(newVar(regist)),p1 -> first, p2 -> first);
+	break;
+      case GTEQ:
+	t = mkInstr(I_GTEQ, mkIVar(newVar(regist)),p1 -> first, p2 -> first);
+	break;
+      case LTEQ:
+	t = mkInstr(I_LTEQ, mkIVar(newVar(regist)),p1 -> first, p2 -> first);
+	break;
+    default: break;
+    }
+    p -> first = mkVaddr(newchar(regist));
+    p -> second = append(append(p1->il,p2->il),mkList(t,NULL)); 
+    regist++;
+    return p;
+    break;
+  }
+}
+
+InstrList* compileCmd(Cmd* c){ 
+  switch(cmd -> kind){
+  case C_ASSIGN:
+    p = compileExpr(cmd -> attr.assign.expr);
+    l = append(p -> second, mkList(mkInstr(I_ASSIGN, mkIVar(cmd -> attr.assign.var), p -> first, NULL), NULL));
+    return l;
+    break;
+    // case IF:
+    // ...
+    }
 }
 
 int main(int argc, char** argv) {
@@ -117,9 +195,7 @@ int main(int argc, char** argv) {
     }
   } //  yyin = stdin
   if (yyparse() == 0) {
-    print_tree(root);
+    //    print_tree(root);
   }
   return 0;
-
-
 }

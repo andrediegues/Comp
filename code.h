@@ -1,5 +1,5 @@
 typedef enum{
-  I_PLUS, I_MINUS, I_DIV, I_TIMES, I_ASSIGN, I_IF, I_GOTO //devem ser diferentes dos ja definidos
+  I_PLUS, I_MINUS, I_DIV, I_TIMES, I_EQ, I_NOTEQ, I_GT, I_LT, I_GTEQ, I_LTEQ, I_ASSIGN, I_IF, I_GOTO //devem ser diferentes dos ja definidos
 }OpKind;
 
 typedef enum{ 
@@ -24,9 +24,8 @@ typedef struct{
   InstrList* second; //Lista ligada de instrucoes de codigo intermedio
 }Pair;
 
-typedef struct _List *List;
-struct _List{
+typedef struct{
   Instr inst;
-  List next;
-}
+  InstrList next;
+}InstrList;
   
