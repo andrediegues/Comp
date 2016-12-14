@@ -1,0 +1,32 @@
+add a, 20, $0
+add b, 21, $0
+seq $t0, a, b
+add areEqual, $t0, $0
+addi $v0 , $0 , 4
+la $a0 , areEqual
+syscall
+sne $t0, a, b
+add notEqual, $t0, $0
+addi $v0 , $0 , 4
+la $a0 , notEqual
+syscall
+sgt $t0, a, b
+add greaterThan, $t0, $0
+addi $v0 , $0 , 4
+la $a0 , greaterThan
+syscall
+slt $t0, a, b
+add lowerThan, $t0, $0
+addi $v0 , $0 , 4
+la $a0 , lowerThan
+syscall
+sge $t0, a, b
+add greaterOrEqual, $t0, $0
+addi $v0 , $0 , 4
+la $a0 , greaterOrEqual
+syscall
+sle $t0, a, b
+add lowerOrEqual, $t0, $0
+addi $v0 , $0 , 4
+la $a0 , lowerOrEqual
+syscall

@@ -1,0 +1,23 @@
+add x, 8, $0
+add y, 4, $0
+add $t0, x, y 
+add add, $t0, $0
+sub $t0, x, y 
+add sub, $t0, $0
+mul $t0, x, y
+add mul, $t0, $0
+div x, y 
+add $t0 $LO $0 
+add div, $t0, $0
+addi $v0 , $0 , 4
+la $a0 , add
+syscall
+addi $v0 , $0 , 4
+la $a0 , sub
+syscall
+addi $v0 , $0 , 4
+la $a0 , mul
+syscall
+addi $v0 , $0 , 4
+la $a0 , div
+syscall
